@@ -30,16 +30,16 @@ const FRIDGE: Amenity = { icon: 'fridge', label: 'Mini Buzdolabı' };
 
 export const rooms: Room[] = [
   {
-    id: 'tek-kisilik',
-    name: 'Tek Kişilik Oda',
+    id: 'konfor-oda',
+    name: 'Konfor Oda',
     description:
       'Çalışma masası ve TV ile öğrenciler ve tek konuklar için tertemiz, sessiz oda.',
     amenities: [WIFI, DESK, TV],
     image: room1,
   },
   {
-    id: 'iki-kisilik',
-    name: 'İki Kişilik Oda',
+    id: 'ikili-oda',
+    name: 'İkili Oda',
     description:
       'İki tek yataklı, bol ışık alan aydınlık oda; arkadaş ve öğrenci konaklamaları için ideal.',
     amenities: [WIFI, DESK, TV],
@@ -47,10 +47,10 @@ export const rooms: Room[] = [
     featured: true,
   },
   {
-    id: 'mutfak-koseli',
-    name: 'Mutfak Köşeli Oda',
+    id: 'apart-oda',
+    name: 'Apart Oda',
     description:
-      'Mini buzdolabı ve çalışma masasıyla pratik oda; uzun süreli konaklamalar için elverişli.',
+      'Mini buzdolabı ve çalışma masasıyla pratik, mutfaklı oda; uzun süreli konaklamalar için elverişli.',
     amenities: [WIFI, DESK, FRIDGE, TV],
     image: room3,
   },

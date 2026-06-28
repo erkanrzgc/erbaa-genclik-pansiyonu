@@ -7,7 +7,10 @@ import '../styles/global.css';
 // Self-host değişken fontlar (latin-ext subset → ç ğ ı ş ö ü İ).
 // unicode-range sayesinde tarayıcı yalnız gereken subset'i indirir.
 import '@fontsource-variable/inter';
-import '@fontsource-variable/fraunces';
+// Başlık serifi: Cormorant Garamond (zarif, high-end). Self-host → CSP font-src 'self'.
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/600.css';
+import '@fontsource/cormorant-garamond/700.css';
 
 import HotelSchema from '../components/HotelSchema.astro';
 import { business } from '../config/business';
@@ -68,7 +71,7 @@ const ogImage = new URL(image, Astro.site).href;
 
     <!-- İkon & tema -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#a4682e" />
+    <meta name="theme-color" content="#f7f4ee" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Sayfaya özel head ekleri (örn. hero görseli preload) -->
