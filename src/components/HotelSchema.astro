@@ -1,0 +1,73 @@
+---
+/**
+ * Schema.org "Hotel" JSON-LD — yerel SEO yapılandırılmış verisi.
+ * Tamamen merkezî business config'ten beslenir (NAP tutarlılığı).
+ * Google Rich Results Test ile doğrulanmalı.
+ */
+import { business } from '../config/business';
+
+const siteUrl = Astro.site?.href ?? 'https://www.erbaaotel.com/';
+const ogImage = new URL('/og-image.jpg', siteUrl).href;
+
+// Öne çıkan olanaklar (placeholder — gerçeğine göre güncellenir)
+const amenities = [
+  'Ücretsiz Wi-Fi',
+  'Klima',
+  '24 Saat Resepsiyon',
+  'Özel Banyo',
+  'Televizyon',
+  'Sıcak Su',
+  'Ücretsiz Otopark',
+  'Aile Odaları',
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Hotel',
+  name: business.name,
+  description: business.tagline,
+  url: siteUrl,
+  telephone: business.phoneE164,
+  email: business.email,
+  image: ogImage,
+  priceRange: '₺₺', // niteliksel — sayfada görünmez, Google sinyali
+  currenciesAccepted: 'TRY',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.address.street,
+    addressLocality: business.address.district, // Erbaa
+    addressRegion: business.address.region, // Tokat
+    postalCode: business.address.postalCode,
+    addressCountry: business.address.country, // TR
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: business.geo.lat,
+    longitude: business.geo.lng,
+  },
+  hasMap: business.maps.placeUrl,
+  // Yalnız gerçek profiller (placeholder '...com/' linkleri elenir → yanlış sinyal yok).
+  sameAs: [
+    business.social.facebook,
+    business.social.instagram,
+    business.social.googleBusiness,
+  ].filter((url) => url && !url.endsWith('.com/')),
+  checkinTime: business.checkInTime,
+  checkoutTime: business.checkOutTime,
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: [
+      'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+    ],
+    opens: '00:00',
+    closes: '23:59',
+  },
+  amenityFeature: amenities.map((name) => ({
+    '@type': 'LocationFeatureSpecification',
+    name,
+    value: true,
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />

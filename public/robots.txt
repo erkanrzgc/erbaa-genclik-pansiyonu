@@ -1,0 +1,6 @@
+# Erbaa Otel & Pansiyon — robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap (domain değişince güncelle)
+Sitemap: https://www.erbaaotel.com/sitemap-index.xml

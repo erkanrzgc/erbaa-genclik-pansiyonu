@@ -1,0 +1,193 @@
+---
+import Icon from './Icon.astro';
+import BrandMark from './BrandMark.astro';
+import { business, telHref, waHref, mailHref, fullAddress } from '../config/business';
+
+const year = new Date().getFullYear();
+---
+
+<footer id="iletisim" class="site-footer">
+  <div class="container-px site-footer__inner">
+    <div class="site-footer__brand">
+      <div class="brand">
+        <BrandMark class="brand__mark" />
+        <span class="brand__name">{business.name}</span>
+      </div>
+      <p class="site-footer__tagline">{business.tagline}</p>
+      <div class="site-footer__social">
+        <a href={business.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <Icon name="facebook" size={20} />
+        </a>
+        <a href={business.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <Icon name="instagram" size={20} />
+        </a>
+        <a href={waHref} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <Icon name="whatsapp" size={20} />
+        </a>
+      </div>
+    </div>
+
+    <div class="site-footer__col">
+      <h3>İletişim</h3>
+      <address class="site-footer__contact">
+        <span class="site-footer__row"><Icon name="mapPin" size={17} /><span>{fullAddress}</span></span>
+        <a class="site-footer__row" href={telHref}><Icon name="phone" size={17} /><span>{business.phoneDisplay}</span></a>
+        <a class="site-footer__row" href={waHref} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={17} /><span>WhatsApp</span></a>
+        <a class="site-footer__row" href={mailHref}><Icon name="mail" size={17} /><span>{business.email}</span></a>
+        <span class="site-footer__row"><Icon name="clock" size={17} /><span>{business.hours}</span></span>
+      </address>
+    </div>
+
+    <div class="site-footer__col">
+      <h3>Hızlı Bağlantılar</h3>
+      <nav class="site-footer__links" aria-label="Alt menü">
+        <a href="#odalar">Odalar</a>
+        <a href="#konum">Konum</a>
+        <a href="#iletisim">İletişim</a>
+        <a href={business.maps.directionsUrl} target="_blank" rel="noopener noreferrer">Yol Tarifi</a>
+      </nav>
+    </div>
+
+    <div class="site-footer__col">
+      <h3>Bilgi & Rezervasyon</h3>
+      <p class="site-footer__note">Fiyat ve müsaitlik için arayın ya da WhatsApp’tan yazın.</p>
+      <div class="site-footer__cta">
+        <a class="btn btn-primary" href={telHref}><Icon name="phone" size={16} />Hemen Ara</a>
+        <a class="btn btn-whatsapp" href={waHref} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={16} />WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <div class="container-px site-footer__bottom-inner">
+      <p>© {year} {business.name}. Tüm hakları saklıdır.</p>
+      <p>Erbaa / Tokat · Pansiyon &amp; Konaklama</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-ink);
+    color: rgba(255, 255, 255, 0.78);
+  }
+  .site-footer__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+    padding-block: clamp(3rem, 2.5rem + 3vw, 5rem);
+  }
+  @media (min-width: 640px) {
+    .site-footer__inner { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1000px) {
+    .site-footer__inner { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
+  }
+
+  .site-footer .brand {
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .site-footer .brand__mark {
+    height: 2rem;
+    width: auto;
+    flex: none;
+  }
+  .site-footer .brand__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+  .site-footer__tagline {
+    margin-top: 1rem;
+    max-width: 30ch;
+    color: rgba(255, 255, 255, 0.66);
+    font-size: 0.95rem;
+  }
+  .site-footer__social {
+    margin-top: 1.2rem;
+    display: flex;
+    gap: 0.6rem;
+  }
+  .site-footer__social a {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.85);
+    transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+  }
+  .site-footer__social a:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  .site-footer__col h3 {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 1rem;
+  }
+
+  .site-footer__contact {
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .site-footer__row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color var(--duration-fast) ease;
+  }
+  a.site-footer__row:hover { color: #fff; }
+  .site-footer__row :global(svg) { color: var(--color-gold); flex: none; }
+
+  .site-footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .site-footer__links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    width: fit-content;
+    transition: color var(--duration-fast) ease;
+  }
+  .site-footer__links a:hover { color: var(--color-accent); }
+
+  .site-footer__note {
+    color: rgba(255, 255, 255, 0.66);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+  .site-footer__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .site-footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .site-footer__bottom-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-block: 1.4rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+</style>

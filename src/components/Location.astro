@@ -1,0 +1,200 @@
+---
+import { Image } from 'astro:assets';
+import locationImg from '../assets/location.jpg';
+import Icon from './Icon.astro';
+import { business, telHref, mailHref, fullAddress } from '../config/business';
+---
+
+<section id="konum" class="section location" aria-labelledby="location-title">
+  <div class="container-px location__grid">
+    <div class="location__info reveal">
+      <p class="eyebrow">Konum</p>
+      <h2 id="location-title">Erbaa’nın Merkezinde, Ulaşımı Kolay</h2>
+      <p class="section-lead">
+        Şehir merkezine, ulaşım noktalarına ve çarşıya yakın konumda; Erbaa’da
+        konaklamanın en pratik adresi.
+      </p>
+
+      <address class="location__address">
+        <span class="location__row">
+          <Icon name="mapPin" size={18} />
+          <span>{fullAddress}</span>
+        </span>
+        <a class="location__row location__link" href={telHref}>
+          <Icon name="phone" size={18} />
+          <span>{business.phoneDisplay}</span>
+        </a>
+        <a class="location__row location__link" href={mailHref}>
+          <Icon name="mail" size={18} />
+          <span>{business.email}</span>
+        </a>
+        <span class="location__row">
+          <Icon name="clock" size={18} />
+          <span>{business.hours}</span>
+        </span>
+      </address>
+
+      <div class="location__cta">
+        <a class="btn btn-primary" href={business.maps.directionsUrl} target="_blank" rel="noopener noreferrer">
+          <Icon name="mapPin" size={17} />
+          Yol Tarifi Al
+        </a>
+        <a class="btn btn-ghost" href={business.social.googleBusiness} target="_blank" rel="noopener noreferrer">
+          Google’da Gör
+        </a>
+      </div>
+    </div>
+
+    <div class="location__map reveal">
+      <div class="map-facade" data-embed={business.maps.embedSrc}>
+        <Image src={locationImg} alt={`${business.name} konumu — Erbaa, Tokat`} widths={[480, 900]} sizes="(min-width:900px) 50vw, 92vw" loading="lazy" class="map-facade__img" />
+        <button class="map-facade__btn" type="button" aria-label="Haritayı yükle ve göster">
+          <Icon name="mapPin" size={20} />
+          Haritayı Göster
+        </button>
+        <noscript>
+          <iframe
+            src={business.maps.embedSrc}
+            title="Konum haritası"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="map-facade__frame"
+          ></iframe>
+        </noscript>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.map-facade').forEach((facade) => {
+    const btn = facade.querySelector('.map-facade__btn');
+    if (!btn) return;
+    btn.addEventListener(
+      'click',
+      () => {
+        const src = facade.getAttribute('data-embed') || '';
+        const iframe = document.createElement('iframe');
+        iframe.src = src;
+        iframe.loading = 'lazy';
+        iframe.title = 'Konum haritası';
+        iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+        iframe.style.cssText = 'width:100%;height:100%;border:0;';
+        facade.replaceChildren(iframe);
+      },
+      { once: true },
+    );
+  });
+</script>
+
+<style>
+  .location__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.6rem, 1rem + 3vw, 3rem);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .location__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .location__info h2 {
+    font-size: var(--text-h2);
+    margin-top: 0.5rem;
+  }
+  .section-lead {
+    margin-top: 0.9rem;
+    color: var(--color-muted);
+    font-size: var(--text-lead);
+  }
+
+  .location__address {
+    font-style: normal;
+    margin-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .location__row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--color-ink-soft);
+  }
+  .location__row :global(svg) {
+    color: var(--color-accent);
+    flex: none;
+  }
+  .location__link {
+    text-decoration: none;
+    transition: color var(--duration-fast) ease;
+  }
+  .location__link:hover {
+    color: var(--color-accent-strong);
+  }
+
+  .location__cta {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .location__map {
+    position: relative;
+    --reveal-i: 1;
+  }
+  .map-facade__frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .map-facade {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow-soft);
+    display: grid;
+    place-items: center;
+  }
+  .map-facade__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .map-facade::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 20, 15, 0.32);
+  }
+  .map-facade__btn {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.85rem 1.4rem;
+    border-radius: 999px;
+    border: none;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-weight: 600;
+    font-size: 0.97rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-lift);
+    transition: transform var(--duration-fast) var(--ease-out-expo), background-color var(--duration-fast) ease;
+  }
+  .map-facade__btn:hover {
+    transform: translateY(-2px);
+    background: #fff;
+  }
+</style>

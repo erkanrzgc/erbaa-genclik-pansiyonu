@@ -1,0 +1,142 @@
+---
+/**
+ * Partners — rezervasyon platformları için kayan logo şeridi (marquee).
+ *
+ * Saf CSS animasyon (StarBorder deseni): SIFIR JS, inline style YOK → katı CSP uyumlu.
+ * Logolar yerel/metin → img-src 'self' uyumlu. reduced-motion'da statik sıra.
+ */
+import { partners } from '../data/partners';
+
+// Az öğe (3) → bir "yarı"yı geniş ekranı dolduracak kadar tekrarla.
+const REPEATS = 6;
+const half = Array.from({ length: REPEATS }, () => partners).flat();
+// İki özdeş yarı → translateX(-50%) tam bir yarı kayar → kusursuz döngü.
+const loop = [...half, ...half];
+---
+
+<section class="partners" aria-labelledby="partners-title">
+  <div class="container-px partners__head reveal">
+    <p class="eyebrow">Bizi Bulun</p>
+    <h2 id="partners-title" class="partners__title">Bizi Bu Platformlarda Bulabilirsiniz</h2>
+  </div>
+
+  <div class="partners__viewport">
+    <ul class="partners__track" role="list" aria-label="Rezervasyon platformları">
+      {
+        loop.map((p, i) => {
+          // Yalnız ilk özgün set ekran okuyucu + klavye için; geri kalanı görsel kopya.
+          const accessible = i < partners.length;
+          return (
+            <li class="partners__item" aria-hidden={accessible ? undefined : 'true'}>
+              <a
+                class="partners__link"
+                href={p.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabindex={accessible ? undefined : -1}
+                aria-label={accessible ? `${p.name} (yeni sekmede açılır)` : undefined}
+              >
+                <span class="partners__mark">{p.name}</span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .partners {
+    padding-block: clamp(2.5rem, 2rem + 2vw, 4rem);
+    background: var(--color-ink);
+    border-block: 1px solid rgba(255, 255, 255, 0.08);
+    scroll-margin-top: 5.5rem;
+  }
+  .partners .eyebrow {
+    color: var(--color-gold);
+  }
+
+  .partners__head {
+    text-align: center;
+    margin-bottom: clamp(1.4rem, 1rem + 1.5vw, 2.2rem);
+  }
+  .partners__title {
+    font-size: var(--text-h3);
+    margin-top: 0.4rem;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  /* Kenarlarda yumuşak silinme (ekstra DOM yok) */
+  .partners__viewport {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  }
+
+  .partners__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: clamp(2rem, 1.4rem + 2.5vw, 4rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    animation: partners-scroll 42s linear infinite;
+    will-change: transform;
+  }
+  /* Üzerine gelince duraklat (okumak için) */
+  .partners__viewport:hover .partners__track {
+    animation-play-state: paused;
+  }
+
+  .partners__item {
+    flex: none;
+  }
+  .partners__link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    outline-offset: 6px;
+  }
+  .partners__mark {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.55rem);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color var(--duration-fast) ease,
+      transform var(--duration-fast) var(--ease-out-expo);
+  }
+  .partners__link:hover .partners__mark,
+  .partners__link:focus-visible .partners__mark {
+    color: var(--color-gold);
+    transform: translateY(-2px);
+  }
+
+  @keyframes partners-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Hareket azaltma: animasyonu durdur, kopyaları gizle, tek temiz sıra göster */
+  @media (prefers-reduced-motion: reduce) {
+    .partners__viewport {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+    .partners__track {
+      animation: none !important;
+      transform: none !important;
+      width: auto;
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 1rem;
+    }
+    .partners__item[aria-hidden] {
+      display: none;
+    }
+  }
+</style>

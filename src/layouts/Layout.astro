@@ -1,0 +1,105 @@
+---
+/**
+ * Ana yerleşim (Layout) — tüm <head> SEO meta'ları, fontlar, JSON-LD.
+ * Tek sayfa site olduğu için Hotel schema burada doğrudan dahil edilir.
+ */
+import '../styles/global.css';
+// Self-host değişken fontlar (latin-ext subset → ç ğ ı ş ö ü İ).
+// unicode-range sayesinde tarayıcı yalnız gereken subset'i indirir.
+import '@fontsource-variable/inter';
+import '@fontsource-variable/fraunces';
+
+import HotelSchema from '../components/HotelSchema.astro';
+import { business } from '../config/business';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = `${business.name} | Temiz, Konforlu, Uygun Konaklama`,
+  description = 'Erbaa’da temiz, konforlu ve uygun fiyatlı otel & pansiyon konaklama. Fiyat ve müsaitlik için hemen arayın veya WhatsApp’tan yazın.',
+  image = '/og-image.jpg',
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex
+      ? <meta name="robots" content="noindex, nofollow" />
+      : <meta name="robots" content="index, follow, max-image-preview:large" />}
+
+    <!-- Yerel SEO ipuçları (Tokat plaka kodu 60) -->
+    <meta name="geo.region" content="TR-60" />
+    <meta name="geo.placename" content="Erbaa, Tokat" />
+    <meta name="geo.position" content={`${business.geo.lat};${business.geo.lng}`} />
+    <meta name="ICBM" content={`${business.geo.lat}, ${business.geo.lng}`} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={business.name} />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- İkon & tema -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#a4682e" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Sayfaya özel head ekleri (örn. hero görseli preload) -->
+    <slot name="head" />
+
+    <!-- Yapılandırılmış veri -->
+    <HotelSchema />
+  </head>
+  <body>
+    <slot />
+
+    <!-- Scroll-reveal gözlemcisi (sıfır bağımlılık; deferred modül).
+         "Armed" deseni: script çalışınca gizle+gözlemle. Bloklanırsa içerik görünür kalır. -->
+    <script>
+      const reveals = document.querySelectorAll('.reveal');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && 'IntersectionObserver' in window) {
+        reveals.forEach((el) => el.classList.add('reveal--armed'));
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+        );
+        reveals.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

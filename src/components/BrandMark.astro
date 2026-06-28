@@ -1,0 +1,26 @@
+---
+/**
+ * BrandMark — Erbaa Gençlik Pansiyon altın amblemi (saf vektör, sıfır JS).
+ * Header + Footer'da "E" placeholder yerine kullanılır. Renk markaya sabit (altın).
+ * Yanında her zaman etiketli link/metin olduğundan dekoratif → aria-hidden.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="236 60 208 274"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="#c2a05a"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d="M340 64 L444 156 L414 156 L340 96 L266 156 L236 156 Z" />
+  <path d="M268 156 L300 156 L300 286 L284 312 L268 286 Z" />
+  <path d="M380 156 L412 156 L412 286 L396 312 L380 286 Z" />
+  <path d="M300 196 L380 196 L380 222 L300 222 Z" />
+  <path d="M328 222 L352 222 L340 330 Z" />
+</svg>

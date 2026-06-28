@@ -1,0 +1,31 @@
+/* SpotlightCard — light luxury teması (orijinal koyu #111 → sıcak yüzey) */
+.card-spotlight {
+  position: relative;
+  border-radius: var(--radius-lg, 1.4rem);
+  border: 1px solid var(--color-line, #e7dccb);
+  background-color: var(--color-surface, #ffffff);
+  overflow: hidden;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --spotlight-color: rgba(176, 123, 62, 0.18);
+}
+
+.card-spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mouse-x) var(--mouse-y),
+    var(--spotlight-color),
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-spotlight:hover::before,
+.card-spotlight:focus-within::before {
+  opacity: 1;
+}

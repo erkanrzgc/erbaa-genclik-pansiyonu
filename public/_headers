@@ -1,0 +1,17 @@
+# Cloudflare Pages / Netlify — güvenlik ve önbellek başlıkları.
+# Ana CSP (script/style hash'leri) Astro tarafından <meta> olarak gömülür.
+# Burada yalnız header-only korumalar (frame-ancestors, HSTS, vb.) + önbellek.
+# (Vercel için aynısı vercel.json'da.)
+
+/*
+  Content-Security-Policy: frame-ancestors 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Cross-Origin-Opener-Policy: same-origin
+
+# Hash'li statik varlıklar → uzun süreli, değişmez önbellek
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
