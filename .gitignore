@@ -26,3 +26,5 @@ pnpm-debug.log*
 # working/staging files (siteye dahil değil)
 _fotograflar/
 erbaa-genclik-pansiyon-logo*.png
+
+.vercel

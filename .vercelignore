@@ -1,0 +1,6 @@
+_fotograflar/
+erbaa-genclik-pansiyon-logo*.png
+.git
+node_modules
+dist
+.astro
