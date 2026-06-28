@@ -18,5 +18,4 @@ export interface Partner {
 export const partners: Partner[] = [
   { name: 'Ucuzabilet', href: 'https://www.ucuzabilet.com/' },
   { name: 'ETS Tur', href: 'https://www.etstur.com/' },
-  { name: 'Otelpuan', href: 'https://www.otelpuan.com/' },
 ];
