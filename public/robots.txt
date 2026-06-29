@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap (domain değişince güncelle)
-Sitemap: https://erbaaotel.vercel.app/sitemap-index.xml
+Sitemap: https://erbaagenclikpansiyon.com/sitemap-index.xml

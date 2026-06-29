@@ -225,4 +225,66 @@ const year = new Date().getFullYear();
   }
   .site-footer__legal a:hover,
   .site-footer__legal-btn:hover { color: var(--color-accent-strong); }
+
+  /* — Focus/hover canlanması — soldan büyüyen altın alt çizgi (metin linkleri) — */
+  .site-footer__links a,
+  .site-footer__legal a,
+  .site-footer__legal-btn {
+    position: relative;
+  }
+  .site-footer__links a::after,
+  .site-footer__legal a::after,
+  .site-footer__legal-btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1.5px;
+    width: 100%;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-normal) var(--ease-out-expo);
+  }
+  .site-footer__links a:hover::after,
+  .site-footer__links a:focus-visible::after,
+  .site-footer__legal a:hover::after,
+  .site-footer__legal a:focus-visible::after,
+  .site-footer__legal-btn:hover::after,
+  .site-footer__legal-btn:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* Görünür klavye focus halkası (tüm etkileşimli öğeler) */
+  .site-footer a:focus-visible,
+  .site-footer__legal-btn:focus-visible,
+  .site-footer__social a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+
+  /* Sosyal ikonlar: focus'ta küçük zıplama */
+  .site-footer__social a:focus-visible {
+    animation: footerIconPop 380ms var(--ease-out-expo);
+  }
+  /* İletişim satırları: focus'ta hafif sağa kayma + renk */
+  a.site-footer__row:focus-visible {
+    color: var(--color-accent-strong);
+    transform: translateX(3px);
+  }
+
+  @keyframes footerIconPop {
+    0% { transform: translateY(0) scale(1); }
+    45% { transform: translateY(-3px) scale(1.08); }
+    100% { transform: translateY(0) scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-footer__links a::after,
+    .site-footer__legal a::after,
+    .site-footer__legal-btn::after { transition: none; }
+    .site-footer__social a:focus-visible { animation: none; }
+    a.site-footer__row:focus-visible { transform: none; }
+  }
 </style>

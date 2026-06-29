@@ -7,8 +7,9 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // Canlı adres (Vercel). Custom domain (erbaaotel.com) bağlanınca burayı ona çek. canonical/OG/sitemap bunu kullanır.
-  site: 'https://erbaaotel.vercel.app',
+  // Canlı/kanonik adres — özel domain. canonical, OG, sitemap, JSON-LD hep bunu kullanır.
+  // Domain değişirse SADECE burayı + public/robots.txt'i güncelle.
+  site: 'https://erbaagenclikpansiyon.com',
 
   // Statik çıktı (SSG) — Cloudflare Pages / Vercel'e sunucusuz deploy.
   output: 'static',
