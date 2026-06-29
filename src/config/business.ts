@@ -14,10 +14,15 @@ export const business = {
   tagline: 'Erbaa’nın merkezinde temiz, konforlu ve uygun konaklama',
   foundingYear: 2010, // TODO: gerçek kuruluş yılı (güven istatistiği için)
 
-  // — Telefon / WhatsApp —
-  phoneDisplay: '+90 532 647 00 82',
-  phoneE164: '+905326470082',
-  whatsapp: '905326470082',
+  // — Telefon —
+  // Birincil hat (Google İşletme Profili'nde kayıtlı) → ekranda + büyük "Ara" CTA bunu kullanır.
+  phoneDisplay: '+90 505 399 45 58',
+  phoneE164: '+905053994558',
+  // İkinci hat → iletişim/footer/konum bölümlerinde ek olarak gösterilir.
+  phone2Display: '+90 542 247 10 56',
+  phone2E164: '+905422471056',
+  // WhatsApp — TODO(geçici): Mustafa hangi numarada WhatsApp aktif derse onunla değiştir; şimdilik birincil hat.
+  whatsapp: '905053994558',
   whatsappMessage:
     'Merhaba, Erbaa Gençlik Pansiyonu için fiyat ve müsaitlik bilgisi almak istiyorum.',
 
@@ -51,7 +56,10 @@ export const business = {
   social: {
     facebook: 'https://www.facebook.com/p/Erbaa-Gen%C3%A7lik-Pansiyonu-61564853461285/',
     instagram: 'https://www.instagram.com/erbaagenclikpansiyon/',
-    googleBusiness: 'https://share.google/paKvv6WjXKIQj1n3o',
+    // Google Knowledge Graph (işletme bilgi paneli). Takip parametreleri (shem/kgs/source)
+    // temizlendi; kalıcı kimlik = kgmid. Hem "Google'da Gör" CTA hem JSON-LD sameAs bunu kullanır.
+    googleBusiness:
+      'https://www.google.com/search?kgmid=%2Fg%2F11cjpdbqpk&q=Erbaa+Gen%C3%A7lik+Pansiyonu',
   },
 
   // — Harita —
@@ -71,6 +79,7 @@ export const business = {
 // ——— Türetilmiş link yardımcıları (componentler bunları kullanır) ———
 
 export const telHref = `tel:${business.phoneE164}`;
+export const telHref2 = `tel:${business.phone2E164}`;
 export const mailHref = `mailto:${business.email}`;
 export const waHref = `https://wa.me/${business.whatsapp}?text=${encodeURIComponent(
   business.whatsappMessage,

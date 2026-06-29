@@ -9,16 +9,16 @@ import { business } from '../config/business';
 const siteUrl = Astro.site?.href ?? 'https://www.erbaaotel.com/';
 const ogImage = new URL('/og-image.jpg', siteUrl).href;
 
-// Öne çıkan olanaklar (placeholder — gerçeğine göre güncellenir)
+// Öne çıkan olanaklar — odalardaki GERÇEK donanımla uyumlu (yanlış sinyal = güven/SEO riski).
+// Not: klima yok (vantilatör var); otopark/aile odası teyit edilmedi → eklenmedi.
 const amenities = [
   'Ücretsiz Wi-Fi',
-  'Klima',
   '24 Saat Resepsiyon',
   'Özel Banyo',
   'Televizyon',
+  'Buzdolabı',
+  'Çalışma Masası',
   'Sıcak Su',
-  'Ücretsiz Otopark',
-  'Aile Odaları',
 ];
 
 const schema = {

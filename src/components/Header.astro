@@ -6,7 +6,7 @@ import { business, telHref } from '../config/business';
 
 <header class="site-header">
   <div class="site-header__inner container-px">
-    <a href="#hero" class="brand" aria-label={`${business.name} ana sayfa`}>
+    <a href="/" class="brand" aria-label={`${business.name} ana sayfa`}>
       <BrandMark class="brand__mark" />
       <span class="brand__text">
         <span class="brand__name">Erbaa Gençlik</span>
@@ -15,9 +15,9 @@ import { business, telHref } from '../config/business';
     </a>
 
     <nav class="site-nav" aria-label="Ana menü">
-      <a href="#odalar">Odalar</a>
-      <a href="#konum">Konum</a>
-      <a href="#iletisim">İletişim</a>
+      <a href="/#odalar">Odalar</a>
+      <a href="/#konum">Konum</a>
+      <a href="/#iletisim">İletişim</a>
     </nav>
 
     <a class="btn btn-primary site-header__call" href={telHref} aria-label="Telefonla ara">
@@ -27,15 +27,63 @@ import { business, telHref } from '../config/business';
   </div>
 </header>
 
+<script>
+  // Aşağı kaydırınca başlığı gizle, yukarı kaydırınca geri getir (passive + rAF → akıcı).
+  // Inline script Astro tarafından hash'lenir → katı CSP uyumlu (unsafe-inline gerekmez).
+  const header = document.querySelector('.site-header');
+  if (header) {
+    const HIDE_AFTER = 140; // bu eşikten önce gizleme (hero üstünde başlık dursun)
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const update = () => {
+      const y = window.scrollY;
+      header.classList.toggle('site-header--scrolled', y > 8);
+      if (y > lastY && y > HIDE_AFTER) {
+        header.classList.add('site-header--hidden'); // aşağı → gizle
+      } else if (y < lastY) {
+        header.classList.remove('site-header--hidden'); // yukarı → göster
+      }
+      lastY = y;
+      ticking = false;
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+  }
+</script>
+
 <style>
   .site-header {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in oklab, var(--color-bg) 82%, transparent);
+    /* Hero'dan bir tık koyu (kum tonu) → başlık zeminden ayrışır, karışmaz */
+    background: color-mix(in oklab, var(--color-surface-2) 88%, transparent);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid color-mix(in oklab, var(--color-line) 70%, transparent);
+    border-bottom: 1px solid var(--color-line);
+    transition: transform var(--duration-normal) var(--ease-out-expo),
+      box-shadow var(--duration-normal) ease,
+      background-color var(--duration-normal) ease;
+    will-change: transform;
+  }
+  /* Aşağı kaydırırken gizlen */
+  .site-header--hidden {
+    transform: translateY(-100%);
+  }
+  /* Sayfa kaydırılınca hafif gölge + biraz daha opak zemin (okunabilirlik) */
+  .site-header--scrolled {
+    background: color-mix(in oklab, var(--color-surface-2) 94%, transparent);
+    box-shadow: 0 6px 24px -16px rgba(33, 27, 22, 0.5);
   }
   .site-header__inner {
     display: flex;

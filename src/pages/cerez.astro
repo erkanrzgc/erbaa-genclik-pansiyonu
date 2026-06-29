@@ -1,0 +1,66 @@
+---
+/**
+ * Çerez Politikası. İçerik sitenin GERÇEK davranışını yansıtır:
+ * izleme/reklam çerezi yok; yalnız zorunlu yerel depolama; harita tıklayınca yüklenir.
+ */
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { business, mailHref } from '../config/business';
+
+const updated = '29 Haziran 2026';
+const title = `Çerez Politikası | ${business.name}`;
+const description =
+  'Erbaa Gençlik Pansiyonu çerez politikası: hangi çerezleri/yerel depolamayı kullanıyoruz ve tercihlerinizi nasıl yönetirsiniz.';
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  <main class="legal container-px">
+    <h1>Çerez Politikası</h1>
+    <p class="legal__updated">Son güncelleme: {updated}</p>
+
+    <p>
+      Çerezler ve benzeri yerel depolama teknolojileri, bir web sitesini ziyaret ettiğinizde
+      tarayıcınızda saklanan küçük verilerdir. Bu sayfada {business.name} web sitesinin bu
+      teknolojileri nasıl kullandığını açıklıyoruz.
+    </p>
+
+    <h2>1. Kullandığımız Çerez Türleri</h2>
+    <ul>
+      <li>
+        <strong>Zorunlu / işlevsel:</strong> Sitenin temel işlevleri ve çerez tercihinizin
+        hatırlanması için gereken yerel depolama (ör. <code>erbaa-cookie-consent</code>). Bu olmadan
+        site düzgün çalışmaz; rıza gerektirmez.
+      </li>
+      <li>
+        <strong>Reklam / izleme:</strong> <strong>Kullanılmıyor.</strong> Sitemizde Google Analytics,
+        piksel veya reklam takip çerezi bulunmaz.
+      </li>
+    </ul>
+
+    <h2>2. Üçüncü Taraf İçerik (Harita)</h2>
+    <p>
+      Konum bölümündeki Google Haritalar, gizliliğinizi korumak için <strong>siz “Haritayı Göster”
+      düğmesine tıklayana kadar yüklenmez</strong>. Yalnızca tıkladığınızda Google’a ait çerezler
+      devreye girebilir; bu, Google’ın kendi gizlilik politikasına tabidir.
+    </p>
+
+    <h2>3. Tercihlerinizi Yönetme</h2>
+    <p>
+      İlk ziyaretinizde gösterilen bilgilendirme bandından çerezleri kabul edebilir veya
+      reddedebilirsiniz. Kararınızı dilediğiniz zaman sayfanın altındaki
+      <strong>“Çerez Tercihleri”</strong> bağlantısıyla yeniden açabilirsiniz. Ayrıca tarayıcı
+      ayarlarınızdan çerezleri ve yerel depolamayı silebilir veya engelleyebilirsiniz.
+    </p>
+
+    <h2>4. İletişim</h2>
+    <p>
+      Çerezlerle ilgili sorularınız için: <a href={mailHref}>{business.email}</a>. Ayrıca
+      <a href="/gizlilik">Gizlilik Politikası</a> sayfamıza göz atabilirsiniz.
+    </p>
+
+    <a class="legal__back" href="/">← Ana sayfaya dön</a>
+  </main>
+  <Footer />
+</Layout>

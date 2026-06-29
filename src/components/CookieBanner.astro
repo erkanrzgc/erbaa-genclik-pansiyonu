@@ -1,0 +1,170 @@
+---
+/**
+ * Çerez/yerel depolama bilgilendirmesi — küçük köşe pop-up'ı (KVKK & ePrivacy).
+ *
+ * Site analitik/izleme çerezi KULLANMAZ; harita yalnız tıklayınca yüklenir.
+ * Banner bir izleme kapısı değil, bilgilendirme + onay KAYDIDIR → tercih
+ * `localStorage`'da saklanır. Footer'daki [data-cookie-settings] yeniden açar.
+ *
+ * CSP: inline <script> Astro tarafından hash'lenir, inline `style` yok → katı CSP uyumlu.
+ */
+---
+
+<div
+  class="cookie-pop"
+  id="cookie-banner"
+  role="dialog"
+  aria-live="polite"
+  aria-label="Çerez bilgilendirmesi"
+  hidden
+>
+  <p class="cookie-pop__text">
+    <span class="cookie-pop__emoji" aria-hidden="true">🍪</span>
+    Bu sitede yalnızca <strong>zorunlu</strong> çerezler kullanılır; reklam/izleme yoktur.
+    <a href="/cerez">Detay</a>
+  </p>
+  <div class="cookie-pop__actions">
+    <button type="button" class="cookie-pop__btn cookie-pop__btn--ghost" data-cookie-reject>
+      Reddet
+    </button>
+    <button type="button" class="cookie-pop__btn cookie-pop__btn--primary" data-cookie-accept>
+      Kabul
+    </button>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const KEY = 'erbaa-cookie-consent';
+    const banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+
+    const open = () => {
+      banner.hidden = false;
+    };
+    const close = () => {
+      banner.hidden = true;
+    };
+    const save = (value: string) => {
+      try {
+        localStorage.setItem(KEY, value);
+      } catch {
+        /* private mode / storage kapalı → sessiz geç */
+      }
+      close();
+    };
+
+    let consent: string | null = null;
+    try {
+      consent = localStorage.getItem(KEY);
+    } catch {
+      consent = null;
+    }
+    if (!consent) open();
+
+    banner.querySelector('[data-cookie-accept]')?.addEventListener('click', () => save('accepted'));
+    banner.querySelector('[data-cookie-reject]')?.addEventListener('click', () => save('rejected'));
+
+    // Footer "Çerez Tercihleri" (ve gelecekteki tetikleyiciler) bandı yeniden açar.
+    document.querySelectorAll('[data-cookie-settings]').forEach((el) =>
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        open();
+      }),
+    );
+  })();
+</script>
+
+<style>
+  /* Küçük, sol-alt köşe kartı (tam genişlik bar yerine sade bir bildirim) */
+  .cookie-pop {
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 70;
+    width: min(20rem, calc(100vw - 2rem));
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    box-shadow: 0 18px 40px -20px rgba(33, 27, 22, 0.5);
+    padding: 0.9rem 1rem;
+    animation: cookiePop var(--duration-normal) var(--ease-out-expo) both;
+  }
+  .cookie-pop[hidden] {
+    display: none;
+  }
+
+  .cookie-pop__text {
+    margin: 0 0 0.75rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-ink-soft);
+  }
+  .cookie-pop__emoji {
+    margin-right: 0.15rem;
+  }
+  .cookie-pop__text a {
+    color: var(--color-accent-strong);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    white-space: nowrap;
+  }
+
+  .cookie-pop__actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+  .cookie-pop__btn {
+    border-radius: 999px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding: 0.45rem 1rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background-color var(--duration-fast) ease,
+      color var(--duration-fast) ease, border-color var(--duration-fast) ease,
+      transform var(--duration-fast) var(--ease-out-expo);
+  }
+  .cookie-pop__btn:active {
+    transform: translateY(1px) scale(0.98);
+  }
+  .cookie-pop__btn--primary {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+  .cookie-pop__btn--primary:hover {
+    background-color: var(--color-accent-strong);
+  }
+  .cookie-pop__btn--ghost {
+    background-color: transparent;
+    color: var(--color-ink-soft);
+    border-color: var(--color-line);
+  }
+  .cookie-pop__btn--ghost:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent-strong);
+  }
+
+  /* Mobilde alttaki Ara/WhatsApp çubuğunun ÜSTÜNDE dursun (örtüşme yok) */
+  @media (max-width: 767px) {
+    .cookie-pop {
+      left: 0.75rem;
+      right: 0.75rem;
+      bottom: 5.25rem;
+      width: auto;
+    }
+  }
+
+  @keyframes cookiePop {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

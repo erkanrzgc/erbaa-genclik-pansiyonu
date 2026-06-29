@@ -13,6 +13,7 @@ import '@fontsource/cormorant-garamond/600.css';
 import '@fontsource/cormorant-garamond/700.css';
 
 import HotelSchema from '../components/HotelSchema.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 import { business } from '../config/business';
 
 interface Props {
@@ -71,7 +72,7 @@ const ogImage = new URL(image, Astro.site).href;
 
     <!-- İkon & tema -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#f7f4ee" />
+    <meta name="theme-color" content="#faf7f1" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Sayfaya özel head ekleri (örn. hero görseli preload) -->
@@ -82,6 +83,9 @@ const ogImage = new URL(image, Astro.site).href;
   </head>
   <body>
     <slot />
+
+    <!-- Çerez/KVKK bilgilendirme bandı (site geneli; ilk ziyarette görünür) -->
+    <CookieBanner />
 
     <!-- Scroll-reveal gözlemcisi (sıfır bağımlılık; deferred modül).
          "Armed" deseni: script çalışınca gizle+gözlemle. Bloklanırsa içerik görünür kalır. -->

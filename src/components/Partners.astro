@@ -49,12 +49,12 @@ const loop = [...half, ...half];
 <style>
   .partners {
     padding-block: clamp(2.5rem, 2rem + 2vw, 4rem);
-    background: var(--color-ink);
-    border-block: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--color-surface-2);
+    border-block: 1px solid var(--color-line);
     scroll-margin-top: 5.5rem;
   }
   .partners .eyebrow {
-    color: var(--color-gold);
+    color: var(--color-accent);
   }
 
   .partners__head {
@@ -64,7 +64,7 @@ const loop = [...half, ...half];
   .partners__title {
     font-size: var(--text-h3);
     margin-top: 0.4rem;
-    color: rgba(255, 255, 255, 0.82);
+    color: var(--color-ink-soft);
   }
 
   /* Kenarlarda yumuşak silinme (ekstra DOM yok) */
@@ -105,13 +105,13 @@ const loop = [...half, ...half];
     font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.55rem);
     letter-spacing: -0.01em;
     white-space: nowrap;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-muted);
     transition: color var(--duration-fast) ease,
       transform var(--duration-fast) var(--ease-out-expo);
   }
   .partners__link:hover .partners__mark,
   .partners__link:focus-visible .partners__mark {
-    color: var(--color-gold);
+    color: var(--color-accent-strong);
     transform: translateY(-2px);
   }
 

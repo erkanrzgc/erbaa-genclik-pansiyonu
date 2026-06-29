@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import locationImg from '../assets/location.jpg';
 import Icon from './Icon.astro';
-import { business, telHref, mailHref, fullAddress } from '../config/business';
+import { business, telHref, telHref2, mailHref, fullAddress } from '../config/business';
 ---
 
 <section id="konum" class="section location" aria-labelledby="location-title">
@@ -23,6 +23,10 @@ import { business, telHref, mailHref, fullAddress } from '../config/business';
         <a class="location__row location__link" href={telHref}>
           <Icon name="phone" size={18} />
           <span>{business.phoneDisplay}</span>
+        </a>
+        <a class="location__row location__link" href={telHref2}>
+          <Icon name="phone" size={18} />
+          <span>{business.phone2Display}</span>
         </a>
         <a class="location__row location__link" href={mailHref}>
           <Icon name="mail" size={18} />

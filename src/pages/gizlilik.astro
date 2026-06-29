@@ -1,0 +1,93 @@
+---
+/**
+ * Gizlilik Politikası & KVKK Aydınlatma Metni.
+ * İçerik bu statik tanıtım sitesinin GERÇEK durumunu yansıtır:
+ * hesap/ödeme yok, otomatik veri toplama yok; iletişim ziyaretçi inisiyatifindedir.
+ */
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { business, telHref, mailHref, fullAddress } from '../config/business';
+
+const updated = '29 Haziran 2026';
+const title = `Gizlilik Politikası | ${business.name}`;
+const description =
+  'Erbaa Gençlik Pansiyonu gizlilik politikası ve KVKK aydınlatma metni: hangi verileri işliyoruz, neden ve haklarınız.';
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  <main class="legal container-px">
+    <h1>Gizlilik Politikası</h1>
+    <p class="legal__updated">Son güncelleme: {updated}</p>
+
+    <p>
+      {business.name} olarak gizliliğinize önem veriyoruz. Bu metin, web sitemizi ziyaret
+      ettiğinizde kişisel verilerinizin nasıl işlendiğini ve 6698 sayılı Kişisel Verilerin
+      Korunması Kanunu (KVKK) kapsamındaki haklarınızı açıklar.
+    </p>
+
+    <h2>1. Veri Sorumlusu</h2>
+    <p>
+      Veri sorumlusu: <strong>{business.name}</strong><br />
+      Adres: {fullAddress}<br />
+      Telefon: <a href={telHref}>{business.phoneDisplay}</a><br />
+      E-posta: <a href={mailHref}>{business.email}</a>
+    </p>
+
+    <h2>2. İşlenen Veriler ve Amaç</h2>
+    <p>
+      Bu site statik bir tanıtım sitesidir; üyelik, hesap oluşturma veya çevrimiçi ödeme
+      içermez. Siteyi yalnızca gezdiğinizde tarafımızca <strong>otomatik kişisel veri toplanmaz</strong>.
+    </p>
+    <ul>
+      <li>
+        <strong>İletişime geçtiğinizde:</strong> Bizi telefonla aradığınızda, WhatsApp’tan
+        yazdığınızda veya e-posta gönderdiğinizde paylaştığınız ad, telefon numarası ve mesaj
+        içeriği; yalnızca talebinize yanıt vermek ve rezervasyon/bilgilendirme amacıyla işlenir.
+      </li>
+      <li>
+        <strong>Teknik kayıtlar:</strong> Sitenin barındırıldığı altyapı (hosting) sağlayıcısı,
+        güvenlik ve hizmetin sürekliliği için sınırlı erişim kayıtları (ör. IP adresi) tutabilir.
+        Bu kayıtlar tarafımızca pazarlama amacıyla kullanılmaz.
+      </li>
+    </ul>
+
+    <h2>3. Çerezler</h2>
+    <p>
+      Sitemizde reklam veya izleme (analytics) çerezi kullanılmaz. Yalnızca işlevin çalışması için
+      gereken yerel depolama (ör. çerez tercihinizi hatırlamak) kullanılır. Harita bölümü, siz
+      “Haritayı Göster” düğmesine tıklayana kadar yüklenmez. Ayrıntı için
+      <a href="/cerez">Çerez Politikası</a> sayfasına bakın.
+    </p>
+
+    <h2>4. Verilerin Aktarımı</h2>
+    <p>
+      Kişisel verileriniz; yalnızca yasal yükümlülükler ve hizmetin sunulması için zorunlu olduğu
+      ölçüde, sitenin barındırma altyapısı ve (yalnızca siz onayladığınızda yüklenen) Google
+      Haritalar gibi hizmet sağlayıcılarla paylaşılabilir. Verileriniz pazarlama amacıyla üçüncü
+      kişilere satılmaz.
+    </p>
+
+    <h2>5. Saklama Süresi</h2>
+    <p>
+      İletişim talepleriniz, ilgili işin gerektirdiği süre boyunca ve yasal saklama yükümlülükleri
+      çerçevesinde tutulur; amaç ortadan kalktığında silinir veya anonimleştirilir.
+    </p>
+
+    <h2>6. KVKK Kapsamındaki Haklarınız</h2>
+    <p>KVKK md. 11 uyarınca; kişisel verilerinizin işlenip işlenmediğini öğrenme, işlenmişse buna
+      ilişkin bilgi talep etme, düzeltilmesini veya silinmesini isteme ve işlemenin sınırlandırılmasını
+      talep etme haklarına sahipsiniz. Taleplerinizi yukarıdaki iletişim kanallarından bize iletebilirsiniz.</p>
+
+    <h2>7. İletişim</h2>
+    <p>
+      Gizlilikle ilgili her türlü soru ve talebiniz için:
+      <a href={telHref}>{business.phoneDisplay}</a> ·
+      <a href={mailHref}>{business.email}</a>
+    </p>
+
+    <a class="legal__back" href="/">← Ana sayfaya dön</a>
+  </main>
+  <Footer />
+</Layout>

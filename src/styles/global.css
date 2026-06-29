@@ -7,17 +7,17 @@
    =========================================================================== */
 @theme {
   /* Renkler — Hibrit lüks: açık gövde + altın aksan + koyu hero/footer */
-  --color-bg: #f7f4ee;          /* sıcak fildişi zemin (hafif daha temiz) */
+  --color-bg: #faf7f1;          /* açık sıcak fildişi zemin */
   --color-surface: #ffffff;     /* kart yüzeyi */
-  --color-surface-2: #f1e8da;   /* alternatif bölüm zemini (sıcak kum) */
-  --color-ink: #16171b;         /* soğuk antrasit — ana metin + koyu zeminler (hero/footer) */
-  --color-ink-soft: #463c34;    /* yumuşak koyu */
-  --color-muted: #786c5f;       /* ikincil metin (sıcak taupe) */
+  --color-surface-2: #f3ede2;   /* alternatif bölüm zemini (yumuşak kum) */
+  --color-ink: #2b2620;         /* yumuşak sıcak koyu — ana metin */
+  --color-ink-soft: #574e44;    /* yumuşak koyu */
+  --color-muted: #8a7f72;       /* ikincil metin (sıcak taupe) */
   --color-accent: #8a6a2e;      /* derin antika altın — AA kontrast (beyaz metin ~5:1) */
   --color-accent-strong: #6c5121; /* hover / koyu */
   --color-accent-soft: #efe5d0; /* açık altın tonu (chip arka planı) */
   --color-gold: #c8a558;        /* parlak metalik altın — koyu zeminde dekoratif aksan */
-  --color-line: #e7dccb;        /* sıcak kenarlık */
+  --color-line: #ece3d4;        /* yumuşak kenarlık */
   --color-sage: #5b6e57;        /* ikincil — "temiz/güven" mikro-aksan */
   --color-on-accent: #ffffff;
 
@@ -128,51 +128,72 @@
     color: var(--color-accent-strong);
   }
 
-  /* — Butonlar — */
+  /* — Butonlar — yumuşak degrade + içe ışık (premium his), sade form (pill) — */
   .btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.55rem;
-    padding: 0.85rem 1.5rem;
+    padding: 0.9rem 1.6rem;
     border-radius: 999px;
     font-weight: 600;
     font-size: 0.98rem;
     line-height: 1;
+    letter-spacing: 0.005em;
     cursor: pointer;
     text-decoration: none;
     transition: transform var(--duration-fast) var(--ease-out-expo),
+      box-shadow var(--duration-normal) var(--ease-out-expo),
       background-color var(--duration-fast) ease,
-      box-shadow var(--duration-fast) ease, color var(--duration-fast) ease;
+      border-color var(--duration-fast) ease, color var(--duration-fast) ease;
   }
-  .btn:active { transform: translateY(1px) scale(0.99); }
+  .btn:active { transform: translateY(0) scale(0.985); }
 
+  /* Birincil — antika altın degrade, üstte ince ışık çizgisi (kabarık/cam hissi) */
   .btn-primary {
-    background-color: var(--color-accent);
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--color-accent) 86%, #fff) 0%,
+      var(--color-accent) 46%,
+      var(--color-accent-strong) 100%
+    );
     color: var(--color-on-accent);
-    box-shadow: var(--shadow-soft);
+    box-shadow:
+      0 1px 0 color-mix(in oklab, #fff 26%, transparent) inset,
+      0 8px 20px -10px color-mix(in oklab, var(--color-accent) 70%, transparent);
   }
   .btn-primary:hover {
-    background-color: var(--color-accent-strong);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lift);
+    box-shadow:
+      0 1px 0 color-mix(in oklab, #fff 32%, transparent) inset,
+      0 16px 30px -12px color-mix(in oklab, var(--color-accent) 78%, transparent);
   }
 
   .btn-whatsapp {
-    background-color: #25d366;
+    background-image: linear-gradient(180deg, #2ee06f 0%, #25d366 48%, #1fb959 100%);
     color: #07320f;
-    box-shadow: var(--shadow-soft);
+    box-shadow:
+      0 1px 0 color-mix(in oklab, #fff 30%, transparent) inset,
+      0 8px 20px -10px color-mix(in oklab, #1fb959 65%, transparent);
   }
-  .btn-whatsapp:hover { background-color: #1fb959; transform: translateY(-2px); }
+  .btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 0 color-mix(in oklab, #fff 34%, transparent) inset,
+      0 16px 30px -12px color-mix(in oklab, #1fb959 72%, transparent);
+  }
 
   .btn-ghost {
-    background-color: transparent;
+    background-color: color-mix(in oklab, var(--color-surface) 65%, transparent);
     color: var(--color-ink);
     border: 1px solid var(--color-line);
+    box-shadow: 0 1px 2px rgba(33, 27, 22, 0.04);
   }
   .btn-ghost:hover {
-    border-color: var(--color-accent);
+    border-color: color-mix(in oklab, var(--color-accent) 50%, var(--color-line));
     color: var(--color-accent-strong);
+    background-color: var(--color-accent-soft);
     transform: translateY(-2px);
   }
 
@@ -189,6 +210,56 @@
     font-weight: 500;
     border: 1px solid color-mix(in oklab, var(--color-accent) 18%, transparent);
   }
+
+  /* — Yasal sayfa tipografisi (Gizlilik / Çerez) — */
+  .legal {
+    max-width: 50rem;
+    margin-inline: auto;
+    padding-block: clamp(2.5rem, 2rem + 4vw, 5rem);
+  }
+  .legal h1 {
+    font-size: var(--text-h2);
+    margin-bottom: 0.5rem;
+  }
+  .legal__updated {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+  .legal h2 {
+    font-size: var(--text-h3);
+    margin-top: 2.2rem;
+    margin-bottom: 0.6rem;
+    color: var(--color-ink);
+  }
+  .legal p,
+  .legal li {
+    color: var(--color-ink-soft);
+    line-height: 1.75;
+  }
+  .legal p { margin-bottom: 0.9rem; }
+  .legal ul {
+    margin: 0 0 1.1rem 1.2rem;
+    list-style: disc;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .legal a {
+    color: var(--color-accent-strong);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .legal__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 2.6rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-accent-strong);
+  }
+  .legal__back:hover { color: var(--color-accent); }
 }
 
 /* ===========================================================================
