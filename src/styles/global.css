@@ -22,7 +22,7 @@
   --color-on-accent: #ffffff;
 
   /* Tipografi aileleri (self-host fontsource değişken fontlar) */
-  --font-display: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --font-display: "Tinos", "Times New Roman", Georgia, serif;
   --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   /* Akışkan tipografi ölçeği (clamp → tek değer mobil↔masaüstü) */

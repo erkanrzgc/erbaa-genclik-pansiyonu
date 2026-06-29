@@ -7,10 +7,10 @@ import '../styles/global.css';
 // Self-host değişken fontlar (latin-ext subset → ç ğ ı ş ö ü İ).
 // unicode-range sayesinde tarayıcı yalnız gereken subset'i indirir.
 import '@fontsource-variable/inter';
-// Başlık serifi: Cormorant Garamond (zarif, high-end). Self-host → CSP font-src 'self'.
-import '@fontsource/cormorant-garamond/500.css';
-import '@fontsource/cormorant-garamond/600.css';
-import '@fontsource/cormorant-garamond/700.css';
+// Başlık serifi: Tinos — Times New Roman'ın metrik & şekil uyumlu açık kaynak ikizi.
+// Klasik Times görünümü; self-host → CSP font-src 'self', herkeste birebir aynı render.
+import '@fontsource/tinos/400.css';
+import '@fontsource/tinos/700.css';
 
 import HotelSchema from '../components/HotelSchema.astro';
 import CookieBanner from '../components/CookieBanner.astro';
