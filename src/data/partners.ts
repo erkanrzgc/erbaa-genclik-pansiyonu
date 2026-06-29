@@ -15,16 +15,10 @@ export interface Partner {
   href: string;
 }
 
-// ⚠️ `href`: ideal olan otelin o platformdaki KENDİ ilan sayfasıdır ("tıklayınca bizi bulsunlar").
-//    Kesin ilan linkleri elimize geçince aşağıyı doğrudan o URL ile değiştir. O zamana kadar:
-//    platform adıyla hedefli arama → otelin ilanını/varlığını güvenilir biçimde önümüze getirir.
+// `href`: otelin o platformdaki KENDİ ilan sayfası (işletmeci tarafından verildi).
+// Not: ucuzabilet/etstur otomatik isteklere bot koruması (403/429/challenge) uygular;
+// linkler gerçek tarayıcıdan açılır. İlan adresi değişirse buradan güncelle.
 export const partners: Partner[] = [
-  {
-    name: 'Ucuzabilet',
-    href: 'https://www.google.com/search?q=Erbaa+Gen%C3%A7lik+Pansiyonu+Ucuzabilet',
-  },
-  {
-    name: 'ETS Tur',
-    href: 'https://www.google.com/search?q=Erbaa+Gen%C3%A7lik+Pansiyonu+ETS+Tur',
-  },
+  { name: 'Ucuzabilet', href: 'https://www.ucuzabilet.com/otel/Erbaa-Genclik-Pansiyon' },
+  { name: 'ETS Tur', href: 'https://www.etstur.com/Erbaa-Genclik-Pansiyon' },
 ];

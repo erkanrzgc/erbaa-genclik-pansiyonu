@@ -22,7 +22,7 @@
   --color-on-accent: #ffffff;
 
   /* Tipografi aileleri (self-host fontsource değişken fontlar) */
-  --font-display: "Tinos", "Times New Roman", Georgia, serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   /* Akışkan tipografi ölçeği (clamp → tek değer mobil↔masaüstü) */
@@ -61,8 +61,7 @@
   body {
     background-color: var(--color-bg);
     color: var(--color-ink);
-    /* Gövde de klasik Times (Tinos) — UI öğeleri (buton/nav/eyebrow) ayrıca sans'a sabitlenir */
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -70,10 +69,11 @@
 
   h1, h2, h3 {
     font-family: var(--font-display);
-    /* İnce/zarif Times başlık (Tinos 400). Kalın 600/700 yerine sadelik. */
-    font-weight: 400;
-    line-height: 1.12;
-    letter-spacing: -0.005em;
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    /* Çok hafif derinlik gölgesi (deneme — beğenilmezse tek satırla kaldırılır) */
+    text-shadow: 0 1px 2px color-mix(in oklab, var(--color-ink) 12%, transparent);
   }
 
   img, picture, svg, video {
@@ -133,8 +133,6 @@
   /* — Butonlar — yumuşak degrade + içe ışık (premium his), sade form (pill) — */
   .btn {
     position: relative;
-    /* Butonlar sade sans kalsın (kalın Times buton tıklanırlığı azaltır) */
-    font-family: var(--font-sans);
     display: inline-flex;
     align-items: center;
     justify-content: center;

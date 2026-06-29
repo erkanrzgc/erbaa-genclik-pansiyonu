@@ -67,7 +67,8 @@
     } catch {
       consent = null;
     }
-    if (!consent) open();
+    // Sayfa otursun, sonra fade ile belirsin → "zaten oradaydı" hissi olmasın
+    if (!consent) setTimeout(open, 700);
 
     banner.querySelector('[data-cookie-accept]')?.addEventListener('click', () => save('accepted'));
     banner.querySelector('[data-cookie-reject]')?.addEventListener('click', () => save('rejected'));
@@ -102,7 +103,8 @@
       0 1px 0 color-mix(in oklab, #fff 50%, transparent) inset,
       0 22px 48px -22px rgba(33, 27, 22, 0.55);
     padding: 1rem 1.1rem 1.05rem;
-    animation: cookiePop var(--duration-normal) var(--ease-out-expo) both;
+    /* Belirgin fade + yukarı süzülme (gecikmeli açılır → sayfaya sonradan "gelir") */
+    animation: cookiePop 480ms var(--ease-out-expo) both;
   }
   .cookie-pop[hidden] {
     display: none;
