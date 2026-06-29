@@ -204,13 +204,25 @@
     color: var(--color-accent-strong);
   }
 
-  /* Mobilde alttaki Ara/WhatsApp çubuğunun ÜSTÜNDE dursun (örtüşme yok) */
+  /* Mobil: masaüstü köşe kartı yerine ALTA DOCK olmuş, üstü yuvarlatılmış banner
+     (mobil-native kalıp). CTA şeridinin hemen üstünde; çentik güvenli alanını hesaba katar. */
   @media (max-width: 767px) {
     .cookie-pop {
-      left: 0.75rem;
-      right: 0.75rem;
-      bottom: 5.25rem;
+      left: 0;
+      right: 0;
+      bottom: calc(4rem + env(safe-area-inset-bottom, 0));
       width: auto;
+      border-radius: 18px 18px 0 0;
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      padding: 0.95rem 1.1rem 1.05rem;
+      box-shadow: 0 -14px 30px -20px rgba(33, 27, 22, 0.5);
+    }
+    /* Butonlar tam genişlik (dokunması kolay) */
+    .cookie-pop__btn {
+      flex: 1;
+      padding: 0.62rem 1rem;
     }
   }
 

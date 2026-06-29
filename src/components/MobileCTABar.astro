@@ -5,7 +5,7 @@ import { telHref, waHref } from '../config/business';
 
 <div class="mobile-cta" role="group" aria-label="Hızlı iletişim">
   <a class="mobile-cta__btn mobile-cta__call" href={telHref} aria-label="Telefonla ara">
-    <Icon name="phone" size={20} />
+    <Icon name="phone" size={18} />
     <span>Ara</span>
   </a>
   <a
@@ -15,48 +15,81 @@ import { telHref, waHref } from '../config/business';
     rel="noopener noreferrer"
     aria-label="WhatsApp'tan yaz"
   >
-    <Icon name="whatsapp" size={20} />
+    <Icon name="whatsapp" size={18} />
     <span>WhatsApp</span>
   </a>
 </div>
 
 <style>
+  /* Camsı zeminde yüzen iki pill buton (kenara yapışık tam-bleed yerine) */
   .mobile-cta {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 60;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--color-line);
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.55rem 0.85rem calc(0.55rem + env(safe-area-inset-bottom, 0));
+    background: color-mix(in oklab, var(--color-bg) 80%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid var(--color-line);
-    padding-bottom: env(safe-area-inset-bottom, 0);
-    box-shadow: 0 -8px 24px -12px rgba(33, 27, 22, 0.3);
   }
 
   .mobile-cta__btn {
+    flex: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.95rem 1rem;
+    padding: 0.78rem 1rem;
+    border-radius: 999px;
+    font-family: var(--font-sans);
     font-weight: 600;
-    font-size: 0.98rem;
+    font-size: 0.96rem;
     text-decoration: none;
+    transition: transform var(--duration-fast) var(--ease-out-expo),
+      box-shadow var(--duration-fast) ease;
   }
-  .mobile-cta__call { background: var(--color-accent); color: #fff; }
-  .mobile-cta__wa { background: #25d366; color: #07320f; }
-  .mobile-cta__btn:active { filter: brightness(0.95); }
+  .mobile-cta__btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Site butonlarıyla aynı dil: altın degrade + iç ışık */
+  .mobile-cta__call {
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--color-accent) 86%, #fff) 0%,
+      var(--color-accent) 46%,
+      var(--color-accent-strong) 100%
+    );
+    color: #fff;
+    box-shadow:
+      0 1px 0 color-mix(in oklab, #fff 26%, transparent) inset,
+      0 6px 14px -8px color-mix(in oklab, var(--color-accent) 70%, transparent);
+  }
+  .mobile-cta__wa {
+    background-image: linear-gradient(180deg, #2ee06f 0%, #25d366 48%, #1fb959 100%);
+    color: #07320f;
+    box-shadow:
+      0 1px 0 color-mix(in oklab, #fff 30%, transparent) inset,
+      0 6px 14px -8px color-mix(in oklab, #1fb959 65%, transparent);
+  }
 
   /* İçerik çubuğun arkasında kalmasın */
-  :global(body) { padding-bottom: 0; }
+  :global(body) {
+    padding-bottom: 0;
+  }
   @media (max-width: 767px) {
-    :global(body) { padding-bottom: 4.25rem; }
+    :global(body) {
+      padding-bottom: 4.6rem;
+    }
   }
   /* Masaüstünde gizle (header + hero CTA yeterli) */
   @media (min-width: 768px) {
-    .mobile-cta { display: none; }
+    .mobile-cta {
+      display: none;
+    }
   }
 </style>
