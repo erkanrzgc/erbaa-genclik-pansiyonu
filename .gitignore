@@ -27,4 +27,12 @@ pnpm-debug.log*
 _fotograflar/
 erbaa-genclik-pansiyon-logo*.png
 
+# oda fotoğrafı kaynakları — optimize kopyalar src/assets/rooms/ içinde, bunlar repoya girmez
+odatipi1/
+odatipi2/
+odatipi3/
+
+# Claude preview/launch yerel config (araç)
+.claude/
+
 .vercel

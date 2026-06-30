@@ -1,9 +1,31 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import SpotlightCard from './reactbits/SpotlightCard.jsx';
 import Icon from './Icon.astro';
+import Lightbox from './Lightbox.astro';
 import { rooms } from '../data/rooms';
 import { telHref, waHrefForRoom } from '../config/business';
+
+/**
+ * Lightbox için veri adası: her odanın TÜM galerisi optimize edilmiş WebP olarak
+ * (max 1280px, kaynaktan büyütmeden). İstemci `#rooms-gallery` JSON'undan okur.
+ * URL'ler aynı kökenden (/_astro/...) → CSP img-src 'self' ile uyumlu.
+ */
+interface Slide {
+  src: string;
+  alt: string;
+}
+const galleryData: Record<string, { name: string; slides: Slide[] }> = {};
+for (const room of rooms) {
+  const slides = await Promise.all(
+    room.gallery.map(async (photo): Promise<Slide> => {
+      const width = Math.min(1280, photo.src.width);
+      const optimized = await getImage({ src: photo.src, width, format: 'webp' });
+      return { src: optimized.src, alt: photo.alt };
+    }),
+  );
+  galleryData[room.id] = { name: room.name, slides };
+}
 ---
 
 <section id="odalar" class="section rooms" aria-labelledby="rooms-title">
@@ -22,17 +44,27 @@ import { telHref, waHrefForRoom } from '../config/business';
         rooms.map((room) => (
           <li class="rooms__item reveal">
             <SpotlightCard client:visible className={`room ${room.featured ? 'is-featured' : ''}`}>
-              <div class="room__media">
+              <button
+                type="button"
+                class="room__media"
+                data-open-gallery={room.id}
+                data-gallery-index="0"
+                aria-label={`${room.name} fotoğraf galerisini aç — ${room.gallery.length} fotoğraf`}
+              >
                 <Image
-                  src={room.image}
-                  alt={`${room.name} — Erbaa otel & pansiyon`}
+                  src={room.gallery[0].src}
+                  alt={room.gallery[0].alt}
                   widths={[400, 800]}
                   sizes="(min-width:768px) 46vw, 92vw"
                   loading="lazy"
                   class="room__img"
                 />
                 {room.featured && <span class="room__badge">Popüler</span>}
-              </div>
+                <span class="room__expand">
+                  <Icon name="expand" size={15} />
+                  {room.gallery.length} fotoğraf
+                </span>
+              </button>
 
               <div class="room__body">
                 <h3 class="room__name">{room.name}</h3>
@@ -71,6 +103,11 @@ import { telHref, waHrefForRoom } from '../config/business';
     </ul>
   </div>
 </section>
+
+<!-- Lightbox veri adası: salt-veri (yürütülmez) → CSP'yi etkilemez; is:inline ile Astro işlemez -->
+<script type="application/json" id="rooms-gallery" is:inline set:html={JSON.stringify(galleryData)}
+></script>
+<Lightbox />
 
 <style>
   .rooms {
@@ -135,10 +172,25 @@ import { telHref, waHrefForRoom } from '../config/business';
     border-color: color-mix(in oklab, var(--color-accent) 55%, var(--color-line));
   }
 
+  /* Kapak artık <button> → galeriyi açar (tıkla-büyüt). Buton görünümü sıfırlanır. */
   .room__media {
     position: relative;
+    display: block;
+    width: 100%;
     aspect-ratio: 4 / 3;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    appearance: none;
+    color: inherit;
+    font: inherit;
+  }
+  .room__media:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -3px;
   }
   .room__img {
     width: 100%;
@@ -146,8 +198,41 @@ import { telHref, waHrefForRoom } from '../config/business';
     object-fit: cover;
     transition: transform 0.6s var(--ease-out-expo);
   }
-  :global(.room:hover) .room__img {
+  :global(.room:hover) .room__img,
+  .room__media:focus-visible .room__img {
     transform: scale(1.04);
+  }
+
+  /* "X fotoğraf" galeri ipucu — sağ alt köşede camsı pill, hover/odakta belirginleşir */
+  .room__expand {
+    position: absolute;
+    right: 0.7rem;
+    bottom: 0.7rem;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32rem;
+    padding: 0.32rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #fff;
+    background: color-mix(in oklab, #14110d 58%, transparent);
+    border: 1px solid color-mix(in oklab, #fff 18%, transparent);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition:
+      background-color var(--duration-fast) ease,
+      transform var(--duration-normal) var(--ease-out-expo);
+  }
+  :global(.room:hover) .room__expand,
+  .room__media:focus-visible .room__expand {
+    background: color-mix(in oklab, var(--color-accent-strong) 82%, transparent);
+    transform: translateY(-2px);
+  }
+  .room__expand :global(svg) {
+    flex: none;
   }
   .room__badge {
     position: absolute;
