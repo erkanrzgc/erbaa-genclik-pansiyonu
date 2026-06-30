@@ -15,10 +15,13 @@ export interface Partner {
   href: string;
 }
 
-// `href`: otelin o platformdaki KENDİ ilan sayfası (işletmeci tarafından verildi).
+// `href`: otelin o platformdaki KENDİ ilan sayfası.
 // Not: ucuzabilet/etstur otomatik isteklere bot koruması (403/429/challenge) uygular;
 // linkler gerçek tarayıcıdan açılır. İlan adresi değişirse buradan güncelle.
+// Enuygun ilanı doğrulandı (2026-07): adres + Turizm Bakanlığı belgesi (2022-60-0034)
+// pansiyona ait. Bölge listesinde ilk sırada çıkmasa da direkt ilan sayfası canlı.
 export const partners: Partner[] = [
   { name: 'Ucuzabilet', href: 'https://www.ucuzabilet.com/otel/Erbaa-Genclik-Pansiyon' },
   { name: 'ETS Tur', href: 'https://www.etstur.com/Erbaa-Genclik-Pansiyon' },
+  { name: 'Enuygun', href: 'https://www.enuygun.com/otel/detay/erbaa-genclik-pansiyonu/' },
 ];
