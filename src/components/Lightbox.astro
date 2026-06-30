@@ -146,6 +146,8 @@ import Icon from './Icon.astro';
         img.alt = s.alt;
         img.decoding = 'async';
         img.dataset.src = s.src; // tembel: src loadNear ile atanır
+        // Yüklenince fade-in (boş kare yerine spinner → yumuşak geçiş)
+        img.addEventListener('load', () => fig.classList.add('is-loaded'), { once: true });
         fig.appendChild(img);
         track.appendChild(fig);
 
@@ -234,9 +236,15 @@ import Icon from './Icon.astro';
   })();
 </script>
 
-<style>
+<style is:global>
+  /* GLOBAL: slayt/görsel/nokta öğeleri JS ile (createElement) üretilir; Astro'nun
+     scoped CSS'i (cid attribute) JS ile yaratılan öğelere uygulanmaz. Bu yüzden bu
+     bileşenin stili global'dir. Class isimleri benzersiz `lightbox__*` ön ekli +
+     keyframe'ler `lb*` → site geneliyle çakışma yok. (is-active/is-loaded daima
+     `.lightbox__*` ile birleşik kullanılır, tek başına değil.) */
+
   /* Sayfa kaydırmasını kilitle (html'e sınıf → inline style yok) */
-  :global(html.lb-open) {
+  html.lb-open {
     overflow: hidden;
   }
 
@@ -355,6 +363,7 @@ import Icon from './Icon.astro';
   }
 
   .lightbox__slide {
+    position: relative;
     flex: 0 0 100%;
     width: 100%;
     height: 100%;
@@ -363,6 +372,22 @@ import Icon from './Icon.astro';
     scroll-snap-stop: always;
     display: grid;
     place-items: center;
+  }
+  /* Yükleniyor spinner'ı — foto inene kadar ortada döner; inince kaybolur */
+  .lightbox__slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: 3px solid color-mix(in oklab, #fff 22%, transparent);
+    border-top-color: var(--color-gold);
+    animation: lbSpin 0.8s linear infinite;
+  }
+  .lightbox__slide.is-loaded::after {
+    content: none;
   }
   .lightbox__img {
     max-width: 100%;
@@ -373,6 +398,37 @@ import Icon from './Icon.astro';
     border-radius: var(--radius-lg, 16px);
     box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
     background: color-mix(in oklab, #fff 6%, transparent);
+    /* Yüklenince fade-in (scale'i scroll animasyonu yönetir → çakışma yok) */
+    opacity: 0;
+    transform-origin: center;
+    transition: opacity 0.45s var(--ease-out-expo);
+  }
+  .lightbox__slide.is-loaded .lightbox__img {
+    opacity: 1;
+  }
+
+  /* Kaydırırken ortaya gelen foto büyüyüp odaklanır (scroll-bağlantılı, JS'siz) */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .lightbox__img {
+        animation: lbFocus linear both;
+        animation-timeline: view(inline);
+      }
+    }
+  }
+  @keyframes lbFocus {
+    0%,
+    100% {
+      transform: scale(0.84);
+    }
+    50% {
+      transform: scale(1);
+    }
+  }
+  @keyframes lbSpin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   /* Yan gezinme okları (masaüstü) */
@@ -427,15 +483,16 @@ import Icon from './Icon.astro';
     cursor: pointer;
     background: color-mix(in oklab, #fff 35%, transparent);
     transition:
-      background-color var(--duration-fast) ease,
-      transform var(--duration-fast) var(--ease-out-expo);
+      width var(--duration-normal) var(--ease-out-expo),
+      background-color var(--duration-fast) ease;
   }
   .lightbox__dot:hover {
     background: color-mix(in oklab, #fff 60%, transparent);
   }
+  /* Aktif nokta → altın pill (genişler) */
   .lightbox__dot.is-active {
+    width: 1.5rem;
     background: var(--color-gold);
-    transform: scale(1.35);
   }
   .lightbox__dot:focus-visible {
     outline: 2px solid var(--color-gold);
@@ -477,8 +534,12 @@ import Icon from './Icon.astro';
   }
   @media (prefers-reduced-motion: reduce) {
     .lightbox__backdrop,
-    .lightbox__dialog {
+    .lightbox__dialog,
+    .lightbox__slide::after {
       animation: none;
+    }
+    .lightbox__img {
+      transition: none;
     }
     .lightbox__track {
       scroll-behavior: auto;
