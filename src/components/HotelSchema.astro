@@ -30,6 +30,8 @@ const schema = {
   // Jenerik yerel arama temaları (düşük ama zararsız sinyal).
   keywords: business.seoKeywords.join(', '),
   description: business.tagline,
+  // Google İşletme Profili ile aynı kuruluş tarihi (güven/tutarlılık sinyali).
+  foundingDate: `${business.foundingYear}-01-01`,
   url: siteUrl,
   telephone: business.phoneE164,
   email: business.email,

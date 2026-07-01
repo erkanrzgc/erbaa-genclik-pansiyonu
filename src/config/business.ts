@@ -12,7 +12,7 @@ export const business = {
   name: 'Erbaa Gençlik Pansiyonu',
   legalName: 'Erbaa Gençlik Pansiyonu',
   tagline: 'Erbaa’nın merkezinde temiz, konforlu ve uygun konaklama',
-  foundingYear: 2010, // TODO: gerçek kuruluş yılı (güven istatistiği için)
+  foundingYear: 2013, // Google İşletme Profili ile aynı (1 Ocak 2013)
 
   // Marka ad varyantları (JSON-LD alternateName). GERÇEK yazım/kullanım varyantları:
   // 'u' düşmesi + "otel konforunda pansiyon" konumlaması. Jenerik "erbaa otel"
