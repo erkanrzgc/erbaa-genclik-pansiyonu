@@ -36,7 +36,13 @@ const loop = [...half, ...half];
                 tabindex={accessible ? undefined : -1}
                 aria-label={accessible ? `${p.name} (yeni sekmede açılır)` : undefined}
               >
-                <span class="partners__mark">{p.name}</span>
+                <img
+                  class="partners__logo"
+                  src={p.logo.src}
+                  alt={accessible ? `${p.name} logosu` : ''}
+                  loading="lazy"
+                  decoding="async"
+                />
               </a>
             </li>
           );
@@ -99,19 +105,22 @@ const loop = [...half, ...half];
     text-decoration: none;
     outline-offset: 6px;
   }
-  .partners__mark {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.55rem);
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-    color: var(--color-muted);
-    transition: color var(--duration-fast) ease,
+  /* Logolar soluk/tek-renk durur → üzerine gelince/odakta kendi renklerine döner. */
+  .partners__logo {
+    display: block;
+    height: clamp(1.5rem, 1.15rem + 1vw, 2.05rem);
+    width: auto;
+    filter: grayscale(1);
+    opacity: 0.5;
+    transition:
+      filter var(--duration-normal) ease,
+      opacity var(--duration-normal) ease,
       transform var(--duration-fast) var(--ease-out-expo);
   }
-  .partners__link:hover .partners__mark,
-  .partners__link:focus-visible .partners__mark {
-    color: var(--color-accent-strong);
+  .partners__link:hover .partners__logo,
+  .partners__link:focus-visible .partners__logo {
+    filter: none;
+    opacity: 1;
     transform: translateY(-2px);
   }
 
