@@ -4,7 +4,7 @@
  * ⚠️ DÜRÜSTLÜK + TELİF: Yalnız otelin GERÇEKTEN listelendiği kanallar eklenir.
  *    "Yakında" veya doğrulanmamış platformlar EKLENMEZ.
  *
- * Resmî logolar `src/assets/partners/*.svg` içinde self-host edilir (CSP `img-src 'self'`).
+ * Resmî logolar `src/assets/partners/` içinde self-host edilir (svg/png; CSP `img-src 'self'`).
  * Şeritte tek-renk/soluk durur, üzerine gelince kendi renklerine döner (Partners.astro).
  * Logolar ortakların kendi markaları → "burada bulun" amaçlı nominal kullanım.
  */

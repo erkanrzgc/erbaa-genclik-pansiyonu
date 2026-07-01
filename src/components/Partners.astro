@@ -53,16 +53,14 @@ const loop = [...half, ...half];
 </section>
 
 <style>
-  /* Koyu bant: renkli platform logoları (özellikle sarı Ucuzabilet) ancak koyu
-     zeminde kendi renkleriyle okunur; açık sayfada şık bir kontrast aksanı. */
   .partners {
     padding-block: clamp(2.5rem, 2rem + 2vw, 4rem);
-    background: var(--color-ink);
-    border-block: 1px solid color-mix(in oklab, var(--color-gold) 22%, transparent);
+    background: var(--color-surface-2);
+    border-block: 1px solid var(--color-line);
     scroll-margin-top: 5.5rem;
   }
   .partners .eyebrow {
-    color: var(--color-gold);
+    color: var(--color-accent);
   }
 
   .partners__head {
@@ -72,7 +70,7 @@ const loop = [...half, ...half];
   .partners__title {
     font-size: var(--text-h3);
     margin-top: 0.4rem;
-    color: color-mix(in oklab, var(--color-bg) 94%, #fff);
+    color: var(--color-ink-soft);
   }
 
   /* Kenarlarda yumuşak silinme (ekstra DOM yok) */
@@ -107,19 +105,22 @@ const loop = [...half, ...half];
     text-decoration: none;
     outline-offset: 6px;
   }
-  /* Koyu bantta logolar HER ZAMAN kendi renklerinde (mobilde hover yok → renkler
-     hep görünsün). Hover/odakta hafif parlama + yukarı kalkış. */
+  /* Logolar soluk/tek-renk durur → üzerine gelince/odakta kendi renklerine döner.
+     (Marquee hover'da durduğu için düşük kontrast sorun değil.) */
   .partners__logo {
     display: block;
     height: clamp(1.5rem, 1.15rem + 1vw, 2.05rem);
     width: auto;
-    opacity: 0.9;
+    filter: grayscale(1);
+    opacity: 0.5;
     transition:
+      filter var(--duration-normal) ease,
       opacity var(--duration-normal) ease,
       transform var(--duration-fast) var(--ease-out-expo);
   }
   .partners__link:hover .partners__logo,
   .partners__link:focus-visible .partners__logo {
+    filter: none;
     opacity: 1;
     transform: translateY(-2px);
   }
