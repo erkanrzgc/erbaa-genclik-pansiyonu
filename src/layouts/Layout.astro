@@ -24,9 +24,10 @@ interface Props {
 }
 
 const {
-  // Jenerik arama terimlerini ("Erbaa Otel & Pansiyon Konaklama") başa alıp marka adını
-  // sona koyar → "erbaa otel" / "erbaa pansiyon" sorgularında alaka sinyali güçlenir.
-  title = `Erbaa Otel & Pansiyon Konaklama | ${business.name}`,
+  // Marka adı ÖNDE (güven + Google'ın tercih ettiği doğal başlık), ardından jenerik
+  // "Otel Konaklama" → "erbaa otel/pansiyon/konaklama" sorgularını doğal kapsar.
+  // Sonuç: "Erbaa Gençlik Pansiyonu & Otel Konaklama". (İşletme sahibinin tercihi.)
+  title = `${business.name} & Otel Konaklama`,
   description = 'Erbaa’da otel konforunda, tertemiz ve uygun fiyatlı pansiyon konaklama. Merkezî konum. Fiyat ve müsaitlik için hemen arayın ya da WhatsApp’tan yazın.',
   image = '/og-image.jpg',
   noindex = false,
