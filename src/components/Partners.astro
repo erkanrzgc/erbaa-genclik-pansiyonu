@@ -29,7 +29,7 @@ const loop = [...half, ...half];
           return (
             <li class="partners__item" aria-hidden={accessible ? undefined : 'true'}>
               <a
-                class="partners__link"
+                class:list={['partners__link', { 'partners__link--chip': p.chip }]}
                 href={p.href}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -104,6 +104,12 @@ const loop = [...half, ...half];
     align-items: center;
     text-decoration: none;
     outline-offset: 6px;
+  }
+  /* Açık renkli logo (sarı Ucuzabilet) açık bantta silinir → altına küçük koyu chip. */
+  .partners__link--chip {
+    padding: 0.42rem 0.75rem;
+    border-radius: 10px;
+    background: var(--color-ink);
   }
   /* Logolar soluk/tek-renk durur → üzerine gelince/odakta kendi renklerine döner.
      (Marquee hover'da durduğu için düşük kontrast sorun değil.) */
