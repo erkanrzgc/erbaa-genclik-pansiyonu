@@ -9,7 +9,7 @@
  * Logolar ortakların kendi markaları → "burada bulun" amaçlı nominal kullanım.
  */
 import type { ImageMetadata } from 'astro';
-import ucuzabiletLogo from '../assets/partners/ucuzabilet.svg';
+import ucuzabiletLogo from '../assets/partners/ucuzabilet.png';
 import etsturLogo from '../assets/partners/etstur.svg';
 import enuygunLogo from '../assets/partners/enuygun.svg';
 
