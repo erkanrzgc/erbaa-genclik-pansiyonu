@@ -25,6 +25,10 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'Hotel',
   name: business.name,
+  // Gerçek ad varyantları → yanlış/eksik yazımlarda da eşleşme (ör. 'u' düşmesi).
+  alternateName: business.alternateNames,
+  // Jenerik yerel arama temaları (düşük ama zararsız sinyal).
+  keywords: business.seoKeywords.join(', '),
   description: business.tagline,
   url: siteUrl,
   telephone: business.phoneE164,

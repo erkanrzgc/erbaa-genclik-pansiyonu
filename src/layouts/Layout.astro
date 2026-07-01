@@ -24,8 +24,10 @@ interface Props {
 }
 
 const {
-  title = `${business.name} | Temiz, Konforlu, Uygun Konaklama`,
-  description = 'Erbaa’da temiz, konforlu ve uygun fiyatlı otel & pansiyon konaklama. Fiyat ve müsaitlik için hemen arayın veya WhatsApp’tan yazın.',
+  // Jenerik arama terimlerini ("Erbaa Otel & Pansiyon Konaklama") başa alıp marka adını
+  // sona koyar → "erbaa otel" / "erbaa pansiyon" sorgularında alaka sinyali güçlenir.
+  title = `Erbaa Otel & Pansiyon Konaklama | ${business.name}`,
+  description = 'Erbaa’da otel konforunda, tertemiz ve uygun fiyatlı pansiyon konaklama. Merkezî konum. Fiyat ve müsaitlik için hemen arayın ya da WhatsApp’tan yazın.',
   image = '/og-image.jpg',
   noindex = false,
 } = Astro.props;

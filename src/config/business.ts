@@ -14,6 +14,25 @@ export const business = {
   tagline: 'Erbaa’nın merkezinde temiz, konforlu ve uygun konaklama',
   foundingYear: 2010, // TODO: gerçek kuruluş yılı (güven istatistiği için)
 
+  // Marka ad varyantları (JSON-LD alternateName). GERÇEK yazım/kullanım varyantları:
+  // 'u' düşmesi + "otel konforunda pansiyon" konumlaması. Jenerik "erbaa otel"
+  // aramalarında tanınırlığı artırır — uydurma değil, işletmenin fiilî kullanımı.
+  alternateNames: [
+    'Erbaa Gençlik Pansiyon',
+    'Erbaa Gençlik Otel',
+    'Erbaa Otel Pansiyon',
+  ],
+  // Yerel arama temaları (JSON-LD keywords). İşletmeyi tarif eden jenerik terimler;
+  // düşük ama zararsız sinyal, sahibinin hedeflediği sorgularla birebir örtüşür.
+  seoKeywords: [
+    'Erbaa otel',
+    'Erbaa pansiyon',
+    'Erbaa konaklama',
+    'Erbaa gençlik pansiyonu',
+    'Erbaa ucuz otel',
+    'Tokat Erbaa otel',
+  ],
+
   // — Telefon —
   // Birincil hat (Google İşletme Profili'nde kayıtlı) → ekranda + büyük "Ara" CTA bunu kullanır.
   phoneDisplay: '+90 505 399 45 58',
