@@ -9,8 +9,9 @@ import { business } from '../config/business';
 const siteUrl = Astro.site?.href ?? 'https://erbaagenclikpansiyon.com/';
 const ogImage = new URL('/og-image.jpg', siteUrl).href;
 
-// Öne çıkan olanaklar — odalardaki GERÇEK donanımla uyumlu (yanlış sinyal = güven/SEO riski).
-// Not: klima yok (vantilatör var); otopark/aile odası teyit edilmedi → eklenmedi.
+// Öne çıkan olanaklar — GERÇEK donanım + işletme sahibi teyidiyle uyumlu (yanlış sinyal = güven/SEO riski).
+// Not: klima yok (vantilatör var); özel otopark yok (yakında park var) → eklenmedi.
+//      Mutfak/ortak alan işletme sahibince teyit edildi → eklendi.
 const amenities = [
   'Ücretsiz Wi-Fi',
   '24 Saat Resepsiyon',
@@ -19,6 +20,7 @@ const amenities = [
   'Buzdolabı',
   'Çalışma Masası',
   'Sıcak Su',
+  'Ortak Mutfak',
 ];
 
 const schema = {

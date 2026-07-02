@@ -52,6 +52,12 @@ const faqSchema = {
 <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />
 
 <style>
+  /* Kum bandı → üstteki Konum (açık zemin) bölümünden görsel ayrım.
+     Beyaz akordeon kartları bu zeminde daha belirgin durur. */
+  .faq {
+    background: var(--color-surface-2);
+  }
+
   .faq__head {
     max-width: 46rem;
     margin-bottom: clamp(1.6rem, 1.2rem + 1.5vw, 2.6rem);

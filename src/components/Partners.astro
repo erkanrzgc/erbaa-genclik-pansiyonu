@@ -55,7 +55,9 @@ const loop = [...half, ...half];
 <style>
   .partners {
     padding-block: clamp(2.5rem, 2rem + 2vw, 4rem);
-    background: var(--color-surface-2);
+    /* Düz açık zemin → üstteki SSS (kum bandı) ile alternatif ritim.
+       Rooms(kum) → Konum(açık) → SSS(kum) → Partners(açık) dizilimi. */
+    background: var(--color-bg);
     border-block: 1px solid var(--color-line);
     scroll-margin-top: 5.5rem;
   }
